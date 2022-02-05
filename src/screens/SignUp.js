@@ -9,10 +9,10 @@ const SignUp = (props) => {
                 <View style={styles.container}>
                     <Text style={styles.continue}>Sign Up</Text>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        <TextInput placeholder='Email' placeholderTextColor={'white'} style={styles.inputView} />
-                        <TextInput placeholder='Password' placeholderTextColor={'white'} style={styles.inputView} />
-                        <TextInput placeholder='Re-enter Password' placeholderTextColor={'white'} style={styles.inputView} />
-                        <TextInput placeholder='Phone number' placeholderTextColor={'white'} keyboardType='number-pad' style={styles.inputView} />
+                        <TextInput placeholder='Email' placeholderTextColor={'#10305D'} style={styles.inputView} />
+                        <TextInput placeholder='Password' placeholderTextColor={'#10305D'} style={styles.inputView} />
+                        <TextInput placeholder='Re-enter Password' placeholderTextColor={'#10305D'} style={styles.inputView} />
+                        <TextInput placeholder='Phone number' placeholderTextColor={'#10305D'} keyboardType='number-pad' style={styles.inputView} />
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate('HomePage')}
                             activeOpacity={0.7}
@@ -32,7 +32,7 @@ export default SignUp
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#0e3d6b',
+        backgroundColor: '#214778',
     },
     secondView: {
         flex: 1,
@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
     },
     logo: {
         height: 60,
-        width: 60,
+        width: 70,
         marginLeft: 30,
         marginTop: 20
     },
     sendCode: {
         borderRadius: 30,
-        backgroundColor: '#0e3d6b',
+        backgroundColor: '#1AFF9B',
         paddingVertical: 18,
         marginVertical: 40,
         alignItems: 'center',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         borderWidth: 3
     },
     sndText: {
-        color: 'white',
+        color: '#214778',
         fontFamily: 'Montserrat-Bold',
         fontSize: 17
     },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     inputView: {
         width: '100%',
-        backgroundColor: '#cbd1d6',
+        backgroundColor: '#B3B3B3',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
