@@ -1,28 +1,26 @@
 import React from 'react'
 import { Image, TouchableOpacity, StyleSheet, View, Text, TextInput, ScrollView, Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const Login = (props) => {
     return (
         <>
             <View style={styles.main} >
                 <View style={styles.logoView}>
-                    <View style={styles.logoBack}>
-                        <Image style={styles.logo} source={require('../images/logo.jpg')} />
-                        <Text style={styles.logoText}>Logo</Text>
+                    <Image style={styles.logo} source={require('../images/logo.jpg')} />
+                </View>
+                <View style={styles.iconsRow}>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.iconView}>
+                        <Icon name='logo-google' color={'white'} size={25} />
+                    </TouchableOpacity>
+                    <View style={[styles.iconView, { marginHorizontal: 35 }]}>
+                        <Text style={styles.icons}>f</Text>
+                    </View>
+                    <View style={styles.iconView}>
+                        <Icon name='phone-portrait-outline' color={'white'} size={25} />
                     </View>
                 </View>
                 <ScrollView style={styles.getStart}>
-                    <View style={styles.iconsRow}>
-                        <TouchableOpacity activeOpacity={0.7} style={styles.iconView}>
-                            <Text style={styles.icons}>G</Text>
-                        </TouchableOpacity>
-                        <View style={[styles.iconView, { marginHorizontal: 25 }]}>
-                            <Text style={styles.icons}>f</Text>
-                        </View>
-                        <View style={styles.iconView}>
-                            <Text style={styles.icons}>M</Text>
-                        </View>
-                    </View>
                     <View style={{ width: Dimensions.get('window').width - 68, alignSelf: 'center' }}>
                         <TextInput placeholder='Email' placeholderTextColor={'white'} style={styles.inputView} />
                         <TextInput placeholder='Password' placeholderTextColor={'white'} style={[styles.inputView, { marginTop: 30 }]} />
@@ -30,14 +28,14 @@ const Login = (props) => {
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate('SendOTP')}
                             activeOpacity={0.7}
-                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: '#666a8a' }]}>
+                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: '#1AFF9B' }]}>
                             <Text style={styles.login}>Login</Text>
                         </TouchableOpacity>
                         <Text style={styles.or}>OR</Text>
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate('SignUp')}
                             activeOpacity={0.7}
-                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: '#7e7f87' }]}>
+                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: 'white', borderWidth: 2, borderColor: '#1AFF9B', marginBottom: 20 }]}>
                             <Text style={styles.login}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
@@ -52,31 +50,17 @@ export default Login
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#d5d6de',
+        backgroundColor: '#214778',
     },
     logoView: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginVertical: 20
-    },
-    logoBack: {
-        backgroundColor: '#3d997f',
-        height: 140,
-        width: 140,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 12
     },
     logo: {
-        height: 80,
-        width: 80,
-        borderRadius: 10
-    },
-    logoText: {
-        position: 'absolute',
-        bottom: 7,
-        color: 'white',
-        fontFamily: 'Montserrat-SemiBold'
+        height: 100,
+        width: 125,
+        borderRadius: 10,
+        marginTop: 80
     },
     getStart: {
         flex: 1
@@ -105,12 +89,12 @@ const styles = StyleSheet.create({
         width: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#3d997f',
+        backgroundColor: '#567298',
         borderRadius: 30
     },
     inputView: {
         width: '100%',
-        backgroundColor: '#23473d',
+        backgroundColor: '#3E618D',
         alignSelf: 'center',
         borderRadius: 10,
         paddingLeft: 20,
@@ -119,7 +103,7 @@ const styles = StyleSheet.create({
     },
     forgot: {
         fontFamily: 'Montserrat-Regular',
-        color: 'black',
+        color: 'white',
         marginVertical: 20,
         marginLeft: 2
     },
@@ -129,12 +113,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Bold'
     },
     login: {
-        color: 'white',
+        color: '#214778',
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 16
     },
     or: {
-        color: 'black',
+        color: 'white',
         fontFamily: 'Montserrat-Regular',
         alignSelf: 'center',
         marginVertical: 30

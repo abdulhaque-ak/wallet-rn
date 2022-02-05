@@ -1,16 +1,19 @@
 import React from 'react'
-import { TouchableOpacity, Image, StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity, Image, StyleSheet, Text, View, Dimensions } from 'react-native'
+import { useTheme } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const GetStarted = (props) => {
+    const { colors } = useTheme()
+
     return (
         <View style={styles.main}>
+            <Image style={{ width: Dimensions.get('window').width }} source={require('../images/V1.png')} />
             <View style={styles.logoView}>
-                <View style={styles.logoBack}>
-                    <Image style={styles.logo} source={require('../images/logo.jpg')} />
-                    <Text style={styles.logoText}>Logo</Text>
-                </View>
+                <Image style={styles.logo} source={require('../images/logo.jpg')} />
             </View>
-            <View style={styles.getStart}>
+            <Image style={{ width: Dimensions.get('window').width, zIndex: -9999 }} source={require('../images/V2.png')} />
+            <View style={styles.button}>
                 <TouchableOpacity
                     onPress={() => props.navigation.navigate('Login')}
                     activeOpacity={0.7}
@@ -19,6 +22,7 @@ const GetStarted = (props) => {
                     <Text style={styles.startText}>
                         Get Started
                     </Text>
+                    <Icon name='arrow-forward' style={{ marginLeft: 15 }} size={25} color={'#10305D'} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -30,12 +34,12 @@ export default GetStarted
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#52c4a4'
+        backgroundColor: '#214778'
     },
     logoView: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 0.6
     },
     logoBack: {
         backgroundColor: '#3d997f',
@@ -46,9 +50,10 @@ const styles = StyleSheet.create({
         borderRadius: 12
     },
     logo: {
-        height: 80,
-        width: 80,
-        borderRadius: 10
+        height: 100,
+        width: 125,
+        borderRadius: 10,
+        zIndex: 9999
     },
     logoText: {
         position: 'absolute',
@@ -62,17 +67,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     but: {
-        borderRadius: 30,
-        backgroundColor: '#336356',
+        borderRadius: 40,
+        backgroundColor: '#1BFF9F',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center',
-        paddingVertical: 20,
-        paddingHorizontal: 80
+        paddingVertical: 18,
+        paddingHorizontal: 60
     },
     startText: {
-        color: 'white',
+        color: '#10305D',
         fontFamily: 'Montserrat-Bold',
         fontSize: 16
+    },
+    button: {
+        position: 'absolute',
+        bottom: 60,
+        alignSelf: 'center'
     }
 })

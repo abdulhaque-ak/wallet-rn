@@ -4,6 +4,7 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 
 const VerifyOTP = (props) => {
     const [otp, setOtp] = useState('');
+
     return (
         <View style={styles.main}>
             <Image style={styles.logo} source={require('../images/logo.jpg')} />
@@ -17,15 +18,12 @@ const VerifyOTP = (props) => {
                         code={otp}
                         keyboardType='number-pad'
                         codeInputFieldStyle={{
-                            // width: 45,
-                            // borderWidth: 1,
-                            // borderColor: '#292929',
                             height: 60,
                             borderRadius: 8,
                             borderBottomWidth: 1,
-                            color: 'black',
+                            color: '#214778',
                             fontFamily: 'Montserrat-Regular',
-                            backgroundColor: '#fafafa'
+                            backgroundColor: '#B5B5B5'
                         }}
                         codeInputHighlightStyle={{
                             // borderColor: '#292929',
@@ -51,7 +49,7 @@ export default VerifyOTP
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#0e3d6b',
+        backgroundColor: '#214778',
     },
     secondView: {
         flex: 1,
@@ -67,7 +65,8 @@ const styles = StyleSheet.create({
     continue: {
         fontSize: 20,
         fontFamily: 'Montserrat-SemiBold',
-        paddingVertical: 50
+        paddingVertical: 50,
+        color: '#214778'
     },
     phone: {
         borderRadius: 30,
@@ -78,15 +77,16 @@ const styles = StyleSheet.create({
     },
     logo: {
         height: 60,
-        width: 60,
+        width: 70,
         marginLeft: 30,
         marginTop: 20
     },
     sendCode: {
         borderRadius: 30,
-        backgroundColor: '#0e3d6b',
+        backgroundColor: '#1AFF9B',
         paddingVertical: 18,
-        // marginVertical: 30,
+        // marginVertical: 10,
+        marginTop :20,
         alignItems: 'center'
     },
     goBack: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         borderWidth: 3
     },
     sndText: {
-        color: 'white',
+        color: '#214778',
         fontFamily: 'Montserrat-Bold',
         fontSize: 17
     },
