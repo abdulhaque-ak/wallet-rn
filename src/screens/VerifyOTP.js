@@ -23,7 +23,10 @@ const VerifyOTP = (props) => {
                             borderBottomWidth: 1,
                             color: '#214778',
                             fontFamily: 'Montserrat-Regular',
-                            backgroundColor: '#B5B5B5'
+                            backgroundColor: '#B5B5B5',
+                            fontWeight: 'bold',
+                            fontSize: 20,
+                            borderColor: '#B5B5B5'
                         }}
                         codeInputHighlightStyle={{
                             // borderColor: '#292929',

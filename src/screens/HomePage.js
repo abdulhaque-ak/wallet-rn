@@ -3,7 +3,7 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View
 import Icon from 'react-native-vector-icons/Ionicons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const HomePage = () => {
+const HomePage = (props) => {
     return (
         <View style={styles.main}>
             <TouchableOpacity activeOpacity={0.7}>
@@ -29,13 +29,13 @@ const HomePage = () => {
                     </View>
                     <View style={styles.firstRow}>
                         <View style={styles.foodView}>
-                            <TouchableOpacity activeOpacity={0.7}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('FoodScreens')}>
                                 <Image style={styles.categImg} source={require('../images/food.png')} />
                             </TouchableOpacity>
                             <Text style={styles.categText}>Food</Text>
                         </View>
                         <View style={styles.waterView}>
-                            <TouchableOpacity activeOpacity={0.7}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('WaterScreens')}>
                                 <Image style={styles.categImg} source={require('../images/water.png')} />
                             </TouchableOpacity>
                             <Text style={styles.categText}>Water</Text>
@@ -43,7 +43,7 @@ const HomePage = () => {
                     </View>
                     <View style={styles.firstRow}>
                         <View style={styles.foodView}>
-                            <TouchableOpacity activeOpacity={0.7}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('WalletScreens')}>
                                 <Image style={styles.categImg} source={require('../images/wallet.png')} />
                             </TouchableOpacity>
                             <Text style={styles.categText}>Wallet</Text>
