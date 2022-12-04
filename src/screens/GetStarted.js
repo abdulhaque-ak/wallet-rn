@@ -1,31 +1,33 @@
-import React from 'react'
-import { TouchableOpacity, Image, StyleSheet, Text, View, Dimensions } from 'react-native'
-import { useTheme } from '@react-navigation/native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useContext, useEffect } from 'react'
+import { Image, StyleSheet, View, Dimensions, Modal, Text, ActivityIndicator } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import DataContext, { Provider } from '../context/ItemProvider';
 
 const GetStarted = (props) => {
-    const { colors } = useTheme()
+
+    const [state, setState] = useContext(DataContext);
+    const init = async () => {
+        if (state.signed == true) {
+            props.navigation.replace('HomePage')
+        } else if (state.signed == false) {
+            props.navigation.replace('Language')
+        }
+    }
+
+    
+    React.useEffect(() => {
+        init()
+    }, [state])
 
     return (
-        <View style={styles.main}>
-            <Image style={{ width: Dimensions.get('window').width }} source={require('../images/V1.png')} />
+        <LinearGradient style={styles.main} colors={['#03535f', '#032241']} >
+            <View opacity={0.1} style={styles.top} />
+            <View opacity={0.1} style={styles.bottom} />
             <View style={styles.logoView}>
                 <Image style={styles.logo} source={require('../images/logo.jpg')} />
+                <Image style={styles.gif} source={require('../images/gif2.gif')} />
             </View>
-            <Image style={{ width: Dimensions.get('window').width, zIndex: -9999 }} source={require('../images/V2.png')} />
-            <View style={styles.button}>
-                <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Login')}
-                    activeOpacity={0.7}
-                    style={styles.but}
-                >
-                    <Text style={styles.startText}>
-                        Get Started
-                    </Text>
-                    <Icon name='arrow-forward' style={{ marginLeft: 15 }} size={25} color={'#10305D'} />
-                </TouchableOpacity>
-            </View>
-        </View>
+        </LinearGradient >
     )
 }
 
@@ -39,50 +41,33 @@ const styles = StyleSheet.create({
     logoView: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logoBack: {
-        backgroundColor: '#3d997f',
-        height: 140,
-        width: 140,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 12
+        justifyContent: 'center'
     },
     logo: {
         height: 100,
         width: 125,
         borderRadius: 10,
-        zIndex: 9999
+        marginBottom: 10
     },
-    logoText: {
+    top: {
         position: 'absolute',
-        bottom: 7,
-        color: 'white',
-        fontFamily: 'Montserrat-SemiBold'
+        height: Dimensions.get('window').height * (1 / 3.5),
+        width: Dimensions.get('window').width * (1 / 3.5),
+        borderBottomRightRadius: 80,
+        backgroundColor: 'white'
     },
-    getStart: {
-        flex: 0.4,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    but: {
-        borderRadius: 40,
-        backgroundColor: '#1BFF9F',
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingVertical: 18,
-        paddingHorizontal: 60
-    },
-    startText: {
-        color: '#10305D',
-        fontFamily: 'Montserrat-Bold',
-        fontSize: 16
-    },
-    button: {
+    bottom: {
         position: 'absolute',
-        bottom: 60,
+        bottom: 0,
+        right: 0,
+        height: Dimensions.get('window').height * (1 / 3.5),
+        width: Dimensions.get('window').width * (1 / 3.5),
+        borderTopLeftRadius: 80,
+        backgroundColor: 'white'
+    },
+    gif: {
+        width: 100,
+        height: 20,
         alignSelf: 'center'
     }
 })

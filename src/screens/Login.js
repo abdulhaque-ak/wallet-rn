@@ -9,18 +9,18 @@ const Login = (props) => {
                 <View style={styles.logoView}>
                     <Image style={styles.logo} source={require('../images/logo.jpg')} />
                 </View>
-                <View style={styles.iconsRow}>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.iconView}>
-                        <Icon name='logo-google' color={'white'} size={25} />
-                    </TouchableOpacity>
-                    <View style={[styles.iconView, { marginHorizontal: 35 }]}>
-                        <Text style={styles.icons}>f</Text>
-                    </View>
-                    <View style={styles.iconView}>
-                        <Icon name='phone-portrait-outline' color={'white'} size={25} />
-                    </View>
-                </View>
                 <ScrollView style={styles.getStart}>
+                    {/* <View style={styles.iconsRow}>
+                        <TouchableOpacity activeOpacity={0.7} style={styles.iconView}>
+                            <Icon name='logo-google' color={'white'} size={25} />
+                        </TouchableOpacity>
+                        <View style={[styles.iconView, { marginHorizontal: 35 }]}>
+                            <Text style={styles.icons}>f</Text>
+                        </View>
+                        <View style={styles.iconView}>
+                            <Icon name='phone-portrait-outline' color={'white'} size={25} />
+                        </View>
+                    </View> */}
                     <View style={{ width: Dimensions.get('window').width - 68, alignSelf: 'center' }}>
                         <TextInput placeholder='Email' placeholderTextColor={'white'} style={styles.inputView} />
                         <TextInput placeholder='Password' placeholderTextColor={'white'} style={[styles.inputView, { marginTop: 30 }]} />
@@ -35,7 +35,7 @@ const Login = (props) => {
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate('SignUp')}
                             activeOpacity={0.7}
-                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: 'white', borderWidth: 2, borderColor: '#1AFF9B', marginBottom: 20 }]}>
+                            style={[styles.inputView, { marginTop: 0, alignItems: 'center', justifyContent: 'center', paddingVertical: 15, backgroundColor: 'white', borderWidth: 2, borderColor: '#1AFF9B', marginBottom: 30 }]}>
                             <Text style={styles.login}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
         height: 100,
         width: 125,
         borderRadius: 10,
-        marginTop: 80
+        marginTop: 50,
+        marginBottom: 20
     },
     getStart: {
         flex: 1
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     iconsRow: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginVertical: 60
+        marginVertical: 35
     },
     iconView: {
         height: 60,

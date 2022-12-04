@@ -1,147 +1,115 @@
-import React from 'react'
-import { Dimensions, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, Dimensions, FlatList, Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import MainLayout from '../../components/MainLayout'
 import Icon from 'react-native-vector-icons/Ionicons'
-import Carousel from 'react-native-snap-carousel';
+import { datas } from '../../common'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
-const data = [
-    {
-        id: 1,
-        name: 'First time User Pack',
-        offer: '50%',
-    },
-    {
-        id: 2,
-        name: 'Food Pack 2',
-        offer: '45%',
-    },
-    {
-        id: 3,
-        name: 'Food Pack 3',
-        offer: '50%',
-    }
-]
+const HomePage = (props) => {
+    const [load, setLoad] = React.useState(false)
+    const [datas, setData] = React.useState([])
 
-const data2 = [
-    {
-        id: 22,
-        img: require('../../images/pizza.png'),
-        name: 'Pizza'
-    },
-    {
-        id: 23,
-        img: require('../../images/burger.png'),
-        name: 'Burger'
-    },
-    {
-        id: 24,
-        img: require('../../images/pasta.png'),
-        name: 'Pasta'
+    const goNext = () => {
+        props.navigation.navigate('Profile')
     }
-]
 
-const data3 = [
-    {
-        id: 33,
-        img: require('../../images/pizza.png'),
-        name: 'Combo 1'
-    },
-    {
-        id: 34,
-        img: require('../../images/burger.png'),
-        name: 'Combo 2'
-    },
-    {
-        id: 35,
-        img: require('../../images/pasta.png'),
-        name: 'Combo 3'
+    useEffect(() => {
+        async function fetchData() {
+            setLoad(true)
+            let token = await AsyncStorage.getItem('token');
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+            axios.get(
+                'http://dev1.websorbzdocker.online/users/api/camps/packages/water',
+                config
+            ).then((res) => {
+                setLoad(false)
+                let parsedData = JSON.parse(res?.request?._response)
+                let data = parsedData?.data?.list
+                setData(data)
+            })
+                .catch((err) => {
+                    setLoad(false)
+                })
+        }
+        fetchData()
+    }, [])
+
+    const renderItem = ({ item }) => {
+        return (
+            <View
+                activeOpacity={0.7}
+                style={[styles.items, { marginTop: 6 }]}
+            >
+                <View>
+                    <View style={styles.row}>
+                        <Text style={styles.text}>Camp id: </Text>
+                        <Text style={[styles.text, styles.packName, { fontFamily: 'Montserrat-Bold' }]}>{item?.camp_id}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginVertical: 4 }}>
+                        <Text style={styles.text}>Quantity: </Text>
+                        < Text style={[styles.text, { fontFamily: 'Montserrat-Bold' }]}>{item?.quantity}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginBottom: 4 }}>
+                        <Text style={styles.text}>Package Name: </Text>
+                        < Text style={[styles.text, { flexShrink: 1, fontFamily: 'Montserrat-Bold' }]}>{item?.package_name}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginBottom: 4 }}>
+                        <Text style={styles.text}>Amount: </Text>
+                        < Text style={[styles.text, { fontFamily: 'Montserrat-Bold' }]}>د.إ {item?.amount}</Text>
+                    </View>
+                </View>
+
+            </View>
+        )
     }
-]
-const HomePage = () => {
 
     return (
-        <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
-            <View style={styles.main}>
-                <View>
-                    <View style={styles.header}>
-                        <Text style={styles.text}>Water Order</Text>
-                        <View style={styles.iconView}>
-                            <TouchableOpacity activeOpacity={0.7} style={styles.cart}>
-                                <Icon name='notifications-outline' color={'white'} size={26} />
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.7}>
-                                <Icon name='person-circle-outline' color={'white'} size={30} />
-                            </TouchableOpacity>
-                        </View>
+        <MainLayout>
+            <Modal
+                visible={load}
+                transparent={true}
+            >
+                <View style={{ alignItems: 'center', justifyContent: 'center', height: Dimensions.get('window').height, width: Dimensions.get('window').width, backgroundColor: '#000000DC' }}>
+                    <View style={{ height: 30, width: 30, backgroundColor: '#55f0c2', alignItems: 'center', justifyContent: 'center', borderRadius: 30 }}>
+                        <ActivityIndicator size={'small'} color={'black'} />
                     </View>
-                    <View style={styles.searchSection}>
-                        <Icon style={styles.searchIcon} name="ios-search" size={20} color="white" />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Search here.."
-                            placeholderTextColor={'white'}
+                </View>
+            </Modal>
+            <View style={styles.header}>
+                <Text style={styles.text}>Water Order</Text>
+                <View style={styles.iconView}>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.cart}>
+                        <Icon name='notifications-outline' color={'white'} size={26} />
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.7}>
+                        <Icon name='person-circle-outline' color={'white'} size={30} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.searchSection}>
+                <Icon style={styles.searchIcon} name="ios-search" size={20} color="white" />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Search here.."
+                    placeholderTextColor={'white'}
+                />
+            </View>
+            <View style={styles.secondView}>
+                <View style={styles.container}>
+                    <View style={styles.pkgView}>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={datas}
+                            keyExtractor={(id, index) => index.toString()}
+                            renderItem={renderItem}
                         />
                     </View>
                 </View>
-                <View style={styles.contents}>
-                    <View style={styles.container}>
-                        <View style={{ alignSelf: 'center', marginVertical: 40, flexDirection: 'row', alignItems: 'center' }}>
-                            <ImageBackground
-                                style={styles.recShape}
-                                source={require('../../images/recshape.png')}
-                            >
-                                <Image style={{ height: 110, width: 60 }} source={require('../../images/bottle.png')} />
-                            </ImageBackground>
-                            <View>
-                                <Text style={styles.ltr}>20 Ltr</Text>
-                                <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-                                    <Text style={{ color: 'white', fontFamily: 'Montserrat-Medium', }}>Add</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'center' }}>
-                            <ImageBackground
-                                style={styles.recShape}
-                                source={require('../../images/recshape.png')}
-                            >
-                                <Image style={{ height: 110, width: 60 }} source={require('../../images/bottle.png')} />
-                            </ImageBackground>
-                            <View>
-                                <Text style={styles.ltr}>5 Ltr</Text>
-                                <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-                                    <Text style={{ color: 'white', fontFamily: 'Montserrat-Medium', }}>Add</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        <View style={{ alignSelf: 'center', marginVertical: 40, flexDirection: 'row', alignItems: 'center' }}>
-                            <ImageBackground
-                                style={styles.recShape}
-                                source={require('../../images/recshape.png')}
-                            >
-                                <Image style={{ height: 110, width: 60 }} source={require('../../images/bottle.png')} />
-                            </ImageBackground>
-                            <View>
-                                <Text style={styles.ltr}>1 Ltr</Text>
-                                <TouchableOpacity activeOpacity={0.7} style={{ paddingVertical: 15, paddingHorizontal: 40, borderRadius: 30, backgroundColor: '#143664', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ color: 'white', fontFamily: 'Montserrat-Medium', }}>Add</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={[styles.bottomBut, { backgroundColor: '#1BFF9D' }]}>
-                            <Text style={{ color: '#224A7B', fontFamily: 'Montserrat-SemiBold', }}>
-                                Order Now
-                            </Text>
-                        </View>
-                        <View style={[styles.bottomBut, { backgroundColor: '#ADBED3' }]} >
-                            <Text style={{ color: '#143664', fontFamily: 'Montserrat-SemiBold', }}>
-                                Order History
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-            </View >
-        </ScrollView >
+            </View>
+        </MainLayout>
     )
 }
 
@@ -150,7 +118,93 @@ export default HomePage
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#0e3d6b'
+        backgroundColor: '#214778',
+    },
+    secondView: {
+        flex: 1,
+        borderRadius: 20,
+        backgroundColor: '#02273990',
+        alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 20,
+        marginHorizontal: 5,
+        marginBottom: 10
+    },
+    container: {
+        flex: 1,
+        width: Dimensions.get('window').width - 50,
+    },
+    logo: {
+        height: 60,
+        width: 85,
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    profIcon: {
+        position: 'absolute',
+        right: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#033c51',
+        borderRadius: 30,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'white'
+    },
+    top: {
+        height: Dimensions.get('window').height * (1 / 6),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    sysView: {
+        backgroundColor: '#021620',
+        borderRadius: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#55f0c2'
+    },
+    avail: {
+        color: 'white',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 17,
+        marginLeft: 10
+    },
+    sysName: {
+        color: 'white',
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 22,
+        textAlign: 'center',
+        marginVertical: 20
+    },
+    items: {
+        backgroundColor: '#021620',
+        borderRadius: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#55f0c2',
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        // justifyContent: 'space-between'
+    },
+    pkgView: {
+        flex: 1,
+    },
+    text: {
+        color: 'white',
+        fontFamily: 'Montserrat-Regular'
+    },
+    rightText: {
+        color: 'white',
+        fontFamily: 'Montserrat-Bold',
+        textAlign: 'right'
+    },
+    packName: {
+        marginLeft: 5,
     },
     header: {
         flexDirection: 'row',
@@ -162,33 +216,6 @@ const styles = StyleSheet.create({
     iconView: {
         flexDirection: 'row',
         alignItems: 'center'
-    },
-    cart: {
-        marginHorizontal: 18
-    },
-    text: {
-        fontFamily: 'Montserrat-SemiBold',
-        color: 'white',
-        fontSize: 18
-    },
-    contents: {
-        flex: 1,
-        backgroundColor: 'white',
-        borderTopLeftRadius: 44,
-        borderTopRightRadius: 44,
-    },
-    container: {
-        marginHorizontal: 20,
-    },
-    searchSection: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#4D6E98',
-        width: '90%',
-        alignSelf: 'center',
-        borderRadius: 30,
-        marginBottom: 25
     },
     searchIcon: {
         paddingLeft: 20,
@@ -202,35 +229,17 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Montserrat-Regular',
     },
-    recShape: {
-        height: 150,
-        width: 150,
-        alignItems: 'center',
+    cart: {
+        marginHorizontal: 18
+    },
+    searchSection: {
+        flexDirection: 'row',
         justifyContent: 'center',
-        marginRight: 12
-    },
-    button: {
-        paddingVertical: 15,
-        paddingHorizontal: 40,
-        borderRadius: 30,
-        backgroundColor: '#143664',
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    ltr: {
-        color: '#143664',
-        fontFamily: 'Montserrat-SemiBold',
-        fontSize: 24,
-        marginLeft: 5,
-        marginBottom: 10
-    },
-    bottomBut: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 200,
+        backgroundColor: '#021d24',
+        width: '90%',
         alignSelf: 'center',
-        paddingVertical: 18,
         borderRadius: 30,
-        marginBottom: 20
-    }
+        marginBottom: 25
+    },
 })

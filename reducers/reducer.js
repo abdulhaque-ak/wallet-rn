@@ -5,7 +5,7 @@ const initState = {
 }
 
 export const reducer = (state = initState, action) => {
-    if (action.type == 'ADD_PHONE') {
+    if (action.type == 'ADD_USER') {
         return {
             ...state,
             data: action.payload
